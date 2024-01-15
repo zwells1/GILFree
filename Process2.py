@@ -14,7 +14,7 @@ def ProcessDestructor():
 
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
-def Test(Params):
+def Test(Params, isMainAlive):
 
     global gParams;
 
@@ -23,7 +23,7 @@ def Test(Params):
     gParams = Params;
 
     try:
-        while True:
+        while isMainAlive[0]:
             Work()
 
     except KeyboardInterrupt:

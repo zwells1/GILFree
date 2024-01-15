@@ -1,12 +1,22 @@
-from multiprocessing import Process, freeze_support
-
+from multiprocessing import freeze_support, Process, shared_memory
+import time
+import sys
 import Process1
 import Process2
 
-import sys
+if sys.platform.startswith("win"):
+    import msvcrt as getChar
+if sys.platform.startswith("linux"):
+    import getch as getChar
+
 
 gExampleProcess1 = None
 gExampleProcess2 = None
+try:
+    shm = shared_memory.SharedMemory("isAlive", create=True, size=1)
+except FileExistsError:
+    shm = shared_memory.SharedMemory("isAlive")#is false in case program crashed out last time
+
 
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
@@ -14,10 +24,14 @@ def Exitting():
 
     global gExampleProcess1
     global gExampleProcess2
+    global shm
 
     print("bye")
+    shm.buf[0] = False
     gExampleProcess1.join()
-    gExampleProcess2.join()
+    #gExampleProcess2.join()
+    shm.close()
+    shm.unlink()
     sys.exit()
 
 # ------------------------------------------------------------------------------
@@ -26,26 +40,29 @@ def main(argv):
 
     global gExampleProcess1
     global gExampleProcess2
+    global shm
 
-    Params = {"Process1": 15, "Process2" : 12};
+    Params = {"Process1": 15, "Process2" : 12};    
+    shm.buf[0] = True
 
-    gExampleProcess1 = Process(target=Process1.Test, args=(Params,))
-    gExampleProcess2 = Process(target=Process2.Test, args=(Params,))
 
+    gExampleProcess1 = Process(target=Process1.Test, args=(Params))
+    #gExampleProcess2 = Process(target=Process2.Test, args=(Params))
+    print("starting process")
     gExampleProcess1.start()
-    gExampleProcess2.start()
-
+    #gExampleProcess2.start()
+    print("started")
     try:
         while True:
-            c = input() #read one bye at a time
-            if c == 'x' or c == '^Z':
+            c =  getChar.getch()
+            if c == b'x' or c == b'Z':# or c == '^Z':
                 break
 
     except KeyboardInterrupt:
         Exitting()
 
-    Exitting()
 
+    Exitting()
 
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
