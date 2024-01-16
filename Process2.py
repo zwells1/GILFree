@@ -1,7 +1,7 @@
-import sys
+from multiprocessing import shared_memory
 import time
 
-gParams = None;
+global gParams
 
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
@@ -14,30 +14,27 @@ def ProcessDestructor():
 
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
-def Test(Params, isMainAlive):
+def Test(Params):
 
     global gParams;
 
     print("Entering Process 2")
 
-    gParams = Params;
+    gParams = Params
+    shm = shared_memory.SharedMemory("isAlive")
 
-    try:
-        while isMainAlive[0]:
-            Work()
-
-    except KeyboardInterrupt:
-        ProcessDestructor()
+    while shm.buf[0]:
+        print("alive: ", shm.buf[0])
+        Work()
 
     ProcessDestructor()
-
 
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
 def Work():
 
-    global gParams;
+    global gParams
 
-    print("Process 2 working, Parameter value: " + str(gParams["Process2"]))
+    print("Process 2 working, Parameter value: ", gParams["Process2"])
     time.sleep(0.75)
 

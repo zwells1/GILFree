@@ -16,7 +16,7 @@ def ProcessDestructor():
 
 # ------------------------------------------------------------------------------
 # ------------------------------------------------------------------------------
-def Test(Params, isMainAlive):
+def Test(Params):
     global gParams
     global shm
 
@@ -36,8 +36,6 @@ def Test(Params, isMainAlive):
 # ------------------------------------------------------------------------------
 def Work():
     global gParams
-
-    #print("Process 1 working, Parameter value: " + str(gParams["Process1"]))
-    print("erer")
+    print("Process 1 working, Parameter value: ", gParams["Process1"])
     time.sleep(3)
 

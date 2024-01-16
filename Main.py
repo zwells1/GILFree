@@ -29,7 +29,7 @@ def Exitting():
     print("bye")
     shm.buf[0] = False
     gExampleProcess1.join()
-    #gExampleProcess2.join()
+    gExampleProcess2.join()
     shm.close()
     shm.unlink()
     sys.exit()
@@ -46,11 +46,11 @@ def main(argv):
     shm.buf[0] = True
 
 
-    gExampleProcess1 = Process(target=Process1.Test, args=(Params))
-    #gExampleProcess2 = Process(target=Process2.Test, args=(Params))
+    gExampleProcess1 = Process(target=Process1.Test, args=(Params,))
+    gExampleProcess2 = Process(target=Process2.Test, args=(Params,))
     print("starting process")
     gExampleProcess1.start()
-    #gExampleProcess2.start()
+    gExampleProcess2.start()
     print("started")
     try:
         while True:
