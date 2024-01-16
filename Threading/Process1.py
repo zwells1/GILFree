@@ -16,13 +16,14 @@ def ProcessDestructor():
 # ------------------------------------------------------------------------------
 def Test(Params, isMainAlive):
 
-    global gParams;
+    global gParams
 
     print("Entering Process 1")
 
-    gParams = Params;
+    gParams = Params
 
     while isMainAlive[0]:
+        print("isMainalive!!> ", isMainAlive[0])
         Work()
 
     ProcessDestructor()
