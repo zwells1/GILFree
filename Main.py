@@ -55,7 +55,7 @@ def main(argv):
     try:
         while True:
             c =  getChar.getch()
-            if c == b'x' or c == b'Z':# or c == '^Z':
+            if c == b'\x03':
                 break
 
     except KeyboardInterrupt:
