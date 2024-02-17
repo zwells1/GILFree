@@ -14,8 +14,8 @@ gExampleProcess1 = None
 gExampleProcess2 = None
 try:
     shm = shared_memory.SharedMemory("isAlive", create=True, size=1)
-except FileExistsError:
-    shm = shared_memory.SharedMemory("isAlive")#is false in case program crashed out last time
+except FileExistsError:#is false in case program crashed out last time
+    shm = shared_memory.SharedMemory("isAlive")
 
 
 # ------------------------------------------------------------------------------
