@@ -16,7 +16,7 @@ try:
 
     i = 0
     while 1:
-        time.sleep(0.3)
+        time.sleep(3.0)
         print(i)
         i += 1
 

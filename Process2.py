@@ -1,4 +1,6 @@
 from multiprocessing import shared_memory
+
+import signal
 import time
 
 global gParams
@@ -20,6 +22,9 @@ def Test(Params):
 
     print("Entering Process 2")
 
+    #current process needs to be shutdown by main process ignore sigints
+    signal.signal(signal.SIGINT, lambda x, y: None)
+
     gParams = Params
     shm = shared_memory.SharedMemory("isAlive")
 
@@ -36,5 +41,6 @@ def Work():
     global gParams
 
     print("Process 2 working, Parameter value: ", gParams["Process2"])
-    time.sleep(0.75)
+    #longer process needs to be closed without interrupting current process
+    time.sleep(2.0)
 

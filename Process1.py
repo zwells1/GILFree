@@ -1,5 +1,6 @@
 from multiprocessing import shared_memory
-import sys
+
+import signal
 import time
 
 gParams = None
@@ -21,6 +22,9 @@ def Test(Params):
     global shm
 
     print("Entering Process 1")
+
+    #current process needs to be shutdown by main process ignore sigints
+    signal.signal(signal.SIGINT, lambda x, y: None)
 
     gParams = Params
     shm = shared_memory.SharedMemory("isAlive")
