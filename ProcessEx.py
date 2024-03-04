@@ -2,8 +2,8 @@ from multiprocessing import freeze_support, Process, shared_memory
 import time
 import sys
 
-import Threading.NonBlockingKeyMonitor as KeyMonitor
-import Threading.Task as Task
+import Source.NonBlockingKeyMonitor as KeyMonitor
+import Source.Task as Task
 
 gExampleProcess1 = None
 gExampleProcess2 = None

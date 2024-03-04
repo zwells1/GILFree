@@ -2,8 +2,8 @@ from threading import Thread
 import time
 import sys
 
-import NonBlockingKeyMonitor as KeyMonitor
-import Task
+import Source.NonBlockingKeyMonitor as KeyMonitor
+import Source.Task as Task
 
 
 global gExampleThread1
