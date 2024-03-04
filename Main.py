@@ -4,7 +4,7 @@ import sys
 
 import Threading.NonBlockingKeyMonitor as KeyMonitor
 import Process1
-import Process2
+import Threading.Task as Task
 
 gExampleProcess1 = None
 gExampleProcess2 = None
@@ -41,12 +41,13 @@ def main(argv):
     global gExampleProcess2
     global shm
 
-    Params = {"Process1": 15, "Process2" : 12};
+    Params = {"Task1": {"DelayTime" : 5.0, "Data": 15, "Name": "Task1"},
+              "Task2" : {"DelayTime" : 0.75, "Data": 12, "Name": "Task2"}}
     shm.buf[0] = True
 
 
-    gExampleProcess1 = Process(target=Process1.Test, args=(Params,))
-    gExampleProcess2 = Process(target=Process2.Test, args=(Params,))
+    gExampleProcess1 = Process(target=Task.CreateProcessTask, args=(Params["Task1"],))
+    gExampleProcess2 = Process(target=Task.CreateProcessTask, args=(Params["Task2"],))
     print("starting process")
     gExampleProcess1.start()
     gExampleProcess2.start()
@@ -64,4 +65,3 @@ if __name__ == "__main__":
         freeze_support()
 
     main(sys.argv[1:])
-

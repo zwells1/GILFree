@@ -3,8 +3,7 @@ import time
 import sys
 
 import NonBlockingKeyMonitor as KeyMonitor
-import Process1
-import Process2
+import Task
 
 
 global gExampleThread1
@@ -46,10 +45,11 @@ def main(argv):
     global gExampleThread1, gExampleThread2, gIsAlive
 
     globalSetup()
-    Params = {"Process1": 15, "Process2" : 12};
+    Params = {"Task1": {"DelayTime" : 5.0, "Data": 15, "Name": "Task1"},
+              "Task2" : {"DelayTime" : 0.75, "Data": 12, "Name": "Task2"}}
 
-    gExampleThread1 = Thread(target=Process1.Test, args=(Params, gIsAlive))
-    gExampleThread2 = Thread(target=Process2.Test, args=(Params,gIsAlive))
+    gExampleThread1 = Thread(target=Task.CreateThreadTask, args=(Params["Task1"], gIsAlive))
+    gExampleThread2 = Thread(target=Task.CreateThreadTask, args=(Params["Task2"], gIsAlive))
     gExampleThread1.start()
     gExampleThread2.start()
     print("started")
