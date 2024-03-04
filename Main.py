@@ -3,7 +3,6 @@ import time
 import sys
 
 import Threading.NonBlockingKeyMonitor as KeyMonitor
-import Process1
 import Threading.Task as Task
 
 gExampleProcess1 = None
